@@ -1,10 +1,9 @@
 from calc.reactor import *
 #from calc.boiler import *
 #from calc.turbine import *
-#from calc.autosize import *
 
 def main():
-    print("=== Fission Reactor Calculation ===")
+    print("=== Fission Reactor Calculation (Sodium Reactor) ===")
     print("1. Calculate boiler and turbine size from fuel burn rate")
     print("2. Calculate reactor size for wanted fuel burn rate")
     
@@ -26,6 +25,20 @@ def main():
             print(f"Example reactor size (base x height): {base} x {height}")
         except ValueError as e:
             print(f"Error: {e}")
+
+        choice = input("\nDo you want to calculate boiler and turbine size for this reactor? (y/n): ")
+        if choice.lower() == 'y':
+            choice = '2'  # Proceed to boiler and turbine calculation
+        else:
+            print("Exiting the program.")
+    elif choice == '2':
+        print("Boiler and turbine calculation not yet implemented.")
+    
+        choice = input("\nDo you want to perform another calculation? (y/n): ")
+        if choice.lower() == 'y':
+            main()
+        else:
+            print("Exiting the program.")
     else:
         print("Invalid option.")
 

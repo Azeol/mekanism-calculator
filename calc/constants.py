@@ -4,7 +4,7 @@ CONST = {
     "TICKS_PER_SECOND": 20, # Game ticks per second
     
     # == Fission Reactor ==
-    "FISSION_STEAM_PER_FUEL_WATER": 20_000,     # mB of steam produced per mB of water per mB of fuel
+    "FISSION_STEAM_PER_FUEL": 20_000,     # mB of steam produced per mB of water per mB of fuel
     "FISSION_SODIUM_HEATED_PER_FUEL": 200_000,  # mB of heated sodium produced per mB of fuel
     "SODIUM_TO_STEAM_RATIO": 10,                # Ratio of sodium to steam in boilers
 
