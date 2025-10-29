@@ -1,46 +1,47 @@
 from calc.reactor import *
-#from calc.boiler import *
-#from calc.turbine import *
+from calc.turbine import *
+from calc.boiler import *
+
 
 def main():
-    print("=== Fission Reactor Calculation (Sodium Reactor) ===")
-    print("1. Calculate boiler and turbine size from fuel burn rate")
-    print("2. Calculate reactor size for wanted fuel burn rate")
+    print("=== Mekanism Fission Reactor Calculation ===")
+    print("Choose an option :")
+    print("1. Water-cool reactor setup")
+    print("2. Sodium-cool reactor setup")
+    print("3. Other calculations")
     
-    choice = input("Select an option : ")
-
-    if choice == '1':
-        try:
-            rate_str = input("Enter desired fuel burn rate (mB/t): ")
-            fuel_rate = float(rate_str)
-        except ValueError:
-            print("Invalid number. Please enter a numeric value (e.g., 5.0)")
-            return
-
-        try:
-            assemblies, (base, height) = compute_reactor_size(fuel_rate)
-            print("\n=== Reactor size result ===")
-            print(f"Fuel burn rate: {fuel_rate} mB/t")
-            print(f"Fuel assemblies needed: {assemblies:.0f}")
-            print(f"Example reactor size (base x height): {base} x {height}")
-        except ValueError as e:
-            print(f"Error: {e}")
-
-        choice = input("\nDo you want to calculate boiler and turbine size for this reactor? (y/n): ")
-        if choice.lower() == 'y':
-            choice = '2'  # Proceed to boiler and turbine calculation
-        else:
-            print("Exiting the program.")
-    elif choice == '2':
-        print("Boiler and turbine calculation not yet implemented.")
+    choice1 = input("Enter choice (1/2/3): ")
     
-        choice = input("\nDo you want to perform another calculation? (y/n): ")
-        if choice.lower() == 'y':
-            main()
-        else:
-            print("Exiting the program.")
-    else:
-        print("Invalid option.")
+    if choice1 == '1':
+        print("You selected Water-cool reactor setup.")
+        setup = "water"
+        sub_choice1 = input("Calculate reactor from (1) Desired Turbine Flow or (2) Reactor Dimensions : ")
+        if sub_choice1 == '1':
+            max_flow = int(input("Enter the desired max steam flow rate (mB/t): "))
+            reactor = turbine_based_fission_reactor(max_flow)
+            turbine = turbine_based_on_fission_reactor(reactor.water_burn_rate)
+            
+            reactor.fission_print()
+            turbine.turbine_print()
+            
+        elif sub_choice1 == '2':
+            x = int(input("Enter reactor length (x): "))
+            z = int(input("Enter reactor width (z): "))
+            y = int(input("Enter reactor height (y): "))
+            reactor = optimal_fission_with_dimensions(x, z, y)
+            turbine = turbine_based_on_fission_reactor(reactor.water_burn_rate)
+            
+            reactor.fission_print()
+            print("\n")
+            turbine.turbine_print()
+
+    elif choice1 == '2':
+        print("You selected Sodium-cool reactor setup.")
+        setup = "sodium"
+        
+    elif choice1 == '3':
+        print("You selected Other calculations.")
+        
 
 if __name__ == "__main__":
     main()
